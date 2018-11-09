@@ -21,6 +21,16 @@ function addClickHandlers() {
 
 function appendDom() {
     console.log('in appendDom');
+    $('#tableBody').empty();
+    for (let index = 0; index < employeeArray.length; index++) {
+        let firstName = employeeArray[index].firstName;
+        let lastName = employeeArray[index].lastName;
+        let employeeID = employeeArray[index].employeeID;
+        let title = employeeArray[index].title;
+        let annualSalary = employeeArray[index].annualSalary;
+        let tablerow = $(`<tr><th>${firstName}</th><th>${lastName}</th><th>${employeeID}</th><th>${title}</th><th>${annualSalary}</th>`);
+        $('#tableBody').append(tablerow);
+    }// end for loop
 }//end appendDom function
 
 function inputSubmit() {
