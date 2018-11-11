@@ -4,6 +4,7 @@ $(document).ready( jQReady );
 
 let employeeArray = [];
 let totalAnnualSalary = [];
+let totalMonthlyPay = 0;
 
 class Employee {
     constructor(firstNameIn, lastNameIn, employeeIDIn, titleIn, annualSalaryIn) {
@@ -37,22 +38,31 @@ function appendDom() {
         $(`.${emp.employeeID}`).on('click', function () {
             console.log('baleeted');
             $(`.${emp.employeeID}`).remove();
-            $('#totalMonthlyPay').val('');
-            
-
-
+            console.log('totalMonthlyPay', totalMonthlyPay);
+            divideAgainMonthly(emp.annualSalary);
+            for (let index = 0; index < employeeArray.length; index++) {
+                if (employeeArray[index].employeeID === $(`.${emp.employeeID}`).val() ) {
+                    employeeArray.splice[index];
+                }//end if statement
+            }//end for loop
         }//end ANON function
         )//end on click
     }//end for loop
 }//end appendDom function
 
-// function deleteEmployee() {
-//     console.log('in delete button');
-// }//end deleteEmployee
+function divideAgainMonthly(removedSalary) {
+    console.log('in divideAgainMonthly');
+    
+    let removedMonthly = removedSalary / 12;
+    console.log('removedMonthly', removedMonthly);
+    console.log('removedSalary', removedSalary);
+    sumUpSalary(removedSalary);
+}//end divideAgainMonthly function
 
-function divideMonthly(numToDivide) {
+function divideMonthly(numToDivide) {//_________________2 added 2nd arg numRemoved
     // console.log('in divideMonthly');
-    let totalMonthlyPay = numToDivide / 12;
+    let totalMonthlyPay = numToDivide / 12;//____________________________3 changed totalMonthlyPay to monthlyPay
+    // let totalMonthlyPay = monthlyPay - numRemoved;//________________4 added this line
     console.log('total monthly:' + totalMonthlyPay.toFixed(2));
     $('#totalMonthlyPay').empty();
     if (totalMonthlyPay.toFixed(2) <= 20000) {
@@ -80,7 +90,7 @@ function inputSubmit() {
     let employee = new Employee(firstName, lastName, employeeID, title, annualSalary);
     employeeArray.push(employee);
     appendDom();
-    sumUpSalary();
+    sumUpSalary(0);
 }// end inputSubmit function
 
 function jQReady() {
@@ -88,11 +98,14 @@ function jQReady() {
     addClickHandlers();
 }// end jQReady function
 
-function sumUpSalary() {
+function sumUpSalary(removed) {
     // console.log('in sumUpSalary'); 
     let totalPay = 0;
     for (let index = 0; index < employeeArray.length; index++) {
          totalPay += employeeArray[index].annualSalary;
     }
-    divideMonthly(totalPay);
+    let newTotalPay = totalPay - removed;
+    console.log('newTotalPay = totalPay - removed:', newTotalPay = totalPay - removed);
+    
+    divideMonthly(newTotalPay, 0); //___________________________________1 added zero as an arg
 }//end sumUpSalary function
