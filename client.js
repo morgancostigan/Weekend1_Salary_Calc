@@ -36,15 +36,18 @@ function appendDom() {
         </td></tr>`);
         $('#tableBody').append(tablerow);
         $(`.${emp.employeeID}`).on('click', function () {
-            console.log('baleeted');
+            // console.log('baleeted');
             $(`.${emp.employeeID}`).remove();
             console.log('totalMonthlyPay', totalMonthlyPay);
-            divideAgainMonthly(emp.annualSalary);
+            
+            console.log(parseInt(`${emp.employeeID}`));
+            
             for (let index = 0; index < employeeArray.length; index++) {
-                if (employeeArray[index].employeeID === $(`.${emp.employeeID}`).val() ) {
+                if (employeeArray[index].employeeID === parseInt(`${emp.employeeID}`) ) {
                     employeeArray.splice[index];
                 }//end if statement
             }//end for loop
+            divideAgainMonthly(emp.annualSalary);
         }//end ANON function
         )//end on click
     }//end for loop
@@ -52,17 +55,16 @@ function appendDom() {
 
 function divideAgainMonthly(removedSalary) {
     console.log('in divideAgainMonthly');
-    
     let removedMonthly = removedSalary / 12;
     console.log('removedMonthly', removedMonthly);
     console.log('removedSalary', removedSalary);
-    sumUpSalary(removedSalary);
+    sumUpSalary(removedMonthly);
 }//end divideAgainMonthly function
 
-function divideMonthly(numToDivide) {//_________________2 added 2nd arg numRemoved
+function divideMonthly(numToDivide, numRemoved) {//_________________2 added 2nd arg numRemoved
     // console.log('in divideMonthly');
-    let totalMonthlyPay = numToDivide / 12;//____________________________3 changed totalMonthlyPay to monthlyPay
-    // let totalMonthlyPay = monthlyPay - numRemoved;//________________4 added this line
+    let monthlyPay = numToDivide / 12;//____________________________3 changed totalMonthlyPay to monthlyPay
+    let totalMonthlyPay = monthlyPay - numRemoved;//________________4 added this line
     console.log('total monthly:' + totalMonthlyPay.toFixed(2));
     $('#totalMonthlyPay').empty();
     if (totalMonthlyPay.toFixed(2) <= 20000) {
@@ -98,14 +100,14 @@ function jQReady() {
     addClickHandlers();
 }// end jQReady function
 
-function sumUpSalary(removed) {
+function sumUpSalary(removedPay) {
     // console.log('in sumUpSalary'); 
     let totalPay = 0;
     for (let index = 0; index < employeeArray.length; index++) {
          totalPay += employeeArray[index].annualSalary;
     }
-    let newTotalPay = totalPay - removed;
-    console.log('newTotalPay = totalPay - removed:', newTotalPay = totalPay - removed);
+    let removed = removedPay;
+    console.log(' removed:', removedPay);
     
-    divideMonthly(newTotalPay, 0); //___________________________________1 added zero as an arg
+    divideMonthly(totalPay, removed); //___________________________________1 added zero as an arg
 }//end sumUpSalary function
