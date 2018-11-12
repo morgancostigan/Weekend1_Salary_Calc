@@ -32,22 +32,25 @@ function appendDom() {
         <td>${emp.employeeID}</td>
         <td>${emp.title}</td>
         <td>${emp.annualSalary}</td>
-        <td><button class="${emp.employeeID}">DELETE</button>
+        <td><button class="${emp.employeeID}, btn btn-danger">DELETE</button>
         </td></tr>`);
         $('#tableBody').append(tablerow);
         $(`.${emp.employeeID}`).on('click', function () {
             // console.log('baleeted');
             $(`.${emp.employeeID}`).remove();
-            console.log('totalMonthlyPay', totalMonthlyPay);
-            
-            console.log(parseInt(`${emp.employeeID}`));
-            
-            for (let index = 0; index < employeeArray.length; index++) {
-                if (employeeArray[index].employeeID === parseInt(`${emp.employeeID}`) ) {
-                    employeeArray.splice[index];
-                }//end if statement
-            }//end for loop
-            divideAgainMonthly(emp.annualSalary);
+            console.log('totalMonthlyPay:', totalMonthlyPay);
+            console.log('emp ID:', parseInt(`${emp.employeeID}`));
+            /////////////////////////////////////////////////////////////////////////////Vang Method
+            let employeeIndex = employeeArray.indexOf(emp);
+            employeeArray.splice(employeeIndex,1);
+            /////////////////////////////////////////////////////////////////////////////My broken method
+            // for (let index = employeeArray.length - 1; index >= 0 ; index--) {
+            //     if (employeeArray[index].employeeID == `${emp.employeeID}` ) {
+            //         employeeArray.splice[index,1];
+            //     }//end if statement
+            // }//end for loop
+            // divideAgainMonthly(emp.annualSalary);
+            sumUpSalary();
         }//end ANON function
         )//end on click
     }//end for loop
@@ -61,10 +64,12 @@ function divideAgainMonthly(removedSalary) {
     sumUpSalary(removedMonthly);
 }//end divideAgainMonthly function
 
-function divideMonthly(numToDivide, numRemoved) {//_________________2 added 2nd arg numRemoved
+// function divideMonthly(numToDivide, numRemoved) {//_________________2 added 2nd arg numRemoved
+function divideMonthly(numToDivide) {    
     // console.log('in divideMonthly');
-    let monthlyPay = numToDivide / 12;//____________________________3 changed totalMonthlyPay to monthlyPay
-    let totalMonthlyPay = monthlyPay - numRemoved;//________________4 added this line
+    // let monthlyPay = numToDivide / 12;//____________________________3 changed totalMonthlyPay to monthlyPay
+    // let totalMonthlyPay = monthlyPay - numRemoved;//________________4 added this line
+    let totalMonthlyPay = numToDivide / 12;
     console.log('total monthly:' + totalMonthlyPay.toFixed(2));
     $('#totalMonthlyPay').empty();
     if (totalMonthlyPay.toFixed(2) <= 20000) {
@@ -74,6 +79,8 @@ function divideMonthly(numToDivide, numRemoved) {//_________________2 added 2nd 
         $('#totalMonthlyPay').css('background-color', 'red');
         $('#totalMonthlyPay').append('Total Monthly: ', totalMonthlyPay.toFixed(2));
     }
+    console.log('totalMonthlyPay: ', totalMonthlyPay);
+    
 }//end divideMonthly function
 
 function inputSubmit() {
@@ -92,7 +99,8 @@ function inputSubmit() {
     let employee = new Employee(firstName, lastName, employeeID, title, annualSalary);
     employeeArray.push(employee);
     appendDom();
-    sumUpSalary(0);
+    // sumUpSalary(0);
+    sumUpSalary();
 }// end inputSubmit function
 
 function jQReady() {
@@ -100,14 +108,16 @@ function jQReady() {
     addClickHandlers();
 }// end jQReady function
 
-function sumUpSalary(removedPay) {
+// function sumUpSalary(removedPay) {
+function sumUpSalary() {
     // console.log('in sumUpSalary'); 
     let totalPay = 0;
     for (let index = 0; index < employeeArray.length; index++) {
          totalPay += employeeArray[index].annualSalary;
     }
-    let removed = removedPay;
-    console.log(' removed:', removedPay);
+    // let removed = removedPay;
+    // console.log(' removed:', removedPay);
     
-    divideMonthly(totalPay, removed); //___________________________________1 added zero as an arg
+    // divideMonthly(totalPay, removed); //___________________________________1 added zero as an arg
+    divideMonthly(totalPay);
 }//end sumUpSalary function

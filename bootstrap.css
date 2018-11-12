@@ -1567,7 +1567,7 @@ pre code {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(43, 113, 219, 0.5);
 }
 
 .table-hover tbody tr:hover {
@@ -4880,6 +4880,12 @@ input[type="button"].btn-block {
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
+  /* background-image: url("https://cdn3.i-scmp.com/sites/default/files/styles/980x551/public/images/methode/2017/05/18/1ce274f6-3b03-11e7-8ee3-761f02c18070_image_hires_154927.JPG?itok=7CQCzamU"); */
+  background-size: cover;
+  background: linear-gradient(
+                     rgba(43, 113, 219, 0.5), 
+                     rgba(255, 255, 255, 0.5)),
+                     url("https://cdn3.i-scmp.com/sites/default/files/styles/980x551/public/images/methode/2017/05/18/1ce274f6-3b03-11e7-8ee3-761f02c18070_image_hires_154927.JPG?itok=7CQCzamU");
   background-color: #e9ecef;
   border-radius: 0.3rem;
 }
